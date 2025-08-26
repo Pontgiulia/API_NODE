@@ -10,6 +10,37 @@ app.use(express.json())
 
 //criar rotas
 
+app.put('/cadastro/:id', async(req,res)=>{
+
+    //console.log(req.params.id)
+
+    await prisma.user.update({
+        where:{
+            id: req.params.id
+        },
+        data:{
+            email: req.body.email,
+            name: req.body.name,
+            idade: req.body.idade
+        }
+    })
+
+    res.status(201).json({"Message":"Usuario atualizado"})
+})
+
+app.delete('/cadastro/:id', async(req,res)=>{
+
+    //console.log(req.params.id)
+
+    await prisma.user.delete({
+        where:{
+            id: req.params.id
+        },
+    })
+
+    res.status(201).json({"Message":"Usuario deletado"})
+})
+
 app.post('/cadastro', async (req,res)=>{
 
     await prisma.user.create({
